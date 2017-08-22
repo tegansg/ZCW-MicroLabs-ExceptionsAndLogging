@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 /**
@@ -16,8 +17,22 @@ import java.util.logging.Logger;
 public class PhoneNumberFactoryTest {
 
     @Test(expected = InvalidPhoneNumberFormatException.class)
-    public void testInvalidPhoneNumberFormatException() throws InvalidPhoneNumberFormatException {
+    public void testInvalidPhoneNumberFormatException() throws InvalidPhoneNumberFormatException 
+    {
         PhoneNumberFactory.createPhoneNumber("-1");
+    }
+    
+    @Test
+    public void createPhoneNumberTest() throws InvalidPhoneNumberFormatException
+    {
+    	PhoneNumber number = PhoneNumberFactory.createPhoneNumber("(345)-134-7891");
+
+    	
+    	
+    	Assert.assertEquals("345", number.getAreaCode());
+    	Assert.assertEquals("134", number.getCentralOfficeCode());
+    	Assert.assertEquals("7891", number.getPhoneLineCode());
+    	
     }
 
     @Test
@@ -76,9 +91,9 @@ public class PhoneNumberFactoryTest {
         // : Then
         Assert.assertEquals(phoneNumber.getPhoneLineCode(), phoneLineCode.toString());
     }
-
+    
     @Test
-    public void testCreateRandomPhoneNumber() {
+    public void testCreateRandomPhoneNumberArray() {
         Logger.getGlobal().setLevel(Level.OFF);
         // : Given
         PhoneNumber[] phoneNumbers = PhoneNumberFactory.createRandomPhoneNumberArray(999);
@@ -88,6 +103,11 @@ public class PhoneNumberFactoryTest {
 
             // : Then
             Assert.assertTrue(phoneNumber != null);
+            
         }
+        Logger.getGlobal().setLevel(Level.ALL);
     }
+    
+    
+
 }
